@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satdeploy
+  labels:
+    test: kustomize
+spec: 
+  minReadySeconds: 2
+  replicas: 2
+  selector:
+    matchLabels:
+      test: kustomize
+  template:
+    metadata:
+      name: satdeploy
+      labels:
+        test: kustomize
+    spec: 
+      containers:
+        - name: metrics
+          image: shaikkhajaibrahim/dashboardservice:1.0.0
+          ports:
+            - containerPort: 80
+              name: 
+              protocol: TCP
+---
+apiVersion: v1 
+kind: Service
+metadata: 
+  name: sat-svc
+  labels:
+    test: kustomize
+spec: 
+  ports:
+    - name: nop-svc
+      port: 8081
+      protocol: TCP
+      targetPort: 80
+  selector:
+    test: kustomize
+  type: LoadBalancer

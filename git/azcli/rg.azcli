@@ -1,0 +1,8 @@
+az group create --location eastus --name rg1
+
+az sql server create --name sqlserver `
+                     --resource-group rg1 `
+                     --admin-user shruthi `
+                     --admin-password shruthi@123 `
+                     --identity-type UserAssigned `
+

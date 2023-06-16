@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basket-deploy
+spec:
+  minReadySeconds: 3
+  replicas: 2
+  selector:
+    matchLabels:
+      app: basket-deploy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: basket-deploy
+      labels:
+        app: basket-deploy
+    spec:
+      containers:
+        - name: basket-deploy
+          image: shruthibandi/basketservice:latest
+          ports:
+          - containerPort: 80
+            name: basket-deploy
+            protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: catalog-deploy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: 
+      labels:
+        app: catalog-deploy
+    spec:
+      containers:
+        - name: catalog-deploy
+          image: shruthibandi/catalogservice:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: identity-deploy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: identity-deploy
+      labels:
+        app: identity-deploy
+    spec:
+      containers:
+        - name: identity-deploy
+          image: shruthibandi/identityservice:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: order-deploy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: order-deploy
+      labels:
+        app: order-deploy
+    spec:
+      containers:
+        - name: dashboard
+          image: shruthibandi/orderserice:latest
+          ports:
+            - containerPort: 80                      

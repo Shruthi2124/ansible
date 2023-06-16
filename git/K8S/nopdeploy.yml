@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: nopdeploy
+  labels: 
+    exp: testing
+spec:
+  minReadySeconds: 2
+  replicas: 2
+  selector:
+    matchLabels:
+      example: test-deployment
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: nopdeploy
+      labels:
+        example: test-deployment
+    spec: 
+      containers:
+        - name: nopdeploy
+          image: manugatla/nopcommerce
+          env:
+            - name: MYSQL_SERVER
+              value: mysql-st
+          ports:
+            - containerPort: 5000
+              name: nopdeployport
+              protocol: TCP
+          resources:
+            requests: 
+              cpu: "200m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "128Mi"
+---
+apiVersion: v1 
+kind: Service
+metadata: 
+  name: nop-svcsh
+  labels:
+    example: test-deployment
+spec: 
+  ports:
+    - name: nop-svc
+      port: 8081
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    example: test-deployment
+  type: LoadBalancer
+

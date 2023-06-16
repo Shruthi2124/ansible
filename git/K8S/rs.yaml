@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: rs
+  labels:
+    app: web
+    abc: prod
+spec:
+  minReadySeconds: 2
+  replicas: 5
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      name: rs
+      labels: 
+        app: web
+    spec:
+      containers:
+        - name: nop
+          image: shruthibandi457/nop:latest
+          ports:
+            - containerPort: 5000
+              name: nopport
+              protocol: TCP
+
+    

@@ -1,0 +1,9 @@
+base: 
+  - ../../base
+namespace: test 
+nameprefix: test-
+
+labels:
+  - pairs:
+      env: test
+      version: "1.0.0"

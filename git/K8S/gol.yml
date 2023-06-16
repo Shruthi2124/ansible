@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gol
+spec: 
+  containers:
+    - name: gol
+      image: shruthibandi457/gol:3.4
+      ports: 
+        - containerPort: 8080
+        
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: firstpod
+spec: 
+  containers: 
+    - name: nginx
+      image: nginx
+      ports: 
+        - containerPort: 8080
+          name: nginx
+          protocol: TCP

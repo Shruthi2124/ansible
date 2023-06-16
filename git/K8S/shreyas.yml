@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ss
+spec: 
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: ss
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx
+              mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+    - metadata:
+        name: nginx
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: managed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc
+spec:
+  clusterIP: None
+  ports:
+   - name: nginx
+     port: 80
+     protocol: TCP
+     targetPort: 80
+  selector: 
+    app: nginx
+  type: ClusterIP

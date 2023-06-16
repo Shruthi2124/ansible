@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: gol 
+  labels:
+    env: prod
+spec:
+  minReadySeconds: 2
+  replicas: 3
+  selector: 
+    matchLabels:
+      env: prod
+  template:
+    metadata:
+      name: gol
+      labels:
+        env: prod
+    spec: 
+      containers: 
+        - name: gol
+          image: shruthibandi457/gol:3.4
+          ports: 
+            - containerPort: 8080
+              protocol: TCP
+
+    

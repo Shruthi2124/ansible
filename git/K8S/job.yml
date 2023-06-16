@@ -1,0 +1,24 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata: 
+  name: firstjob
+spec: 
+  template: 
+    metadata: 
+      name: podjob
+    spec: 
+      restartPolicy: OnFailure
+      containers: 
+        - name: firstjobcontainer
+          image: alpine
+          command: 
+            - sleep
+            - 10s
+
+
+
+  
+    
+  
+

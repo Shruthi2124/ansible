@@ -1,0 +1,34 @@
+### push images to ACR : 
+
+create an ACR manually 
+docker login (or) use the below command
+
+on my terminal:
+I have installed az cli
+az aks cli
+docker installed optional(but i had)
+az acr import  -n newacrsh --source docker.io/library/nginx:latest --image nginx:v1
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+K8S commands:
+
+-- kubectl get namespaces --all-namespaces
+-- kubectl get po -n ingress-nginx
+-- kubectl apply -f exm.yml
+-- kubectl apply -f .
+-- kubectl get all
+-- kubectl get po
+
+Helm: 
+ --helm repo remove ingress-nginx1(repo name)
+
+Ingress: 
+kubectl api-resources | grep ingress
+kubectl get ingressclasses.networking.k8s.io
+kubectl get services -o wide -w ingress-nginx-controller -n 

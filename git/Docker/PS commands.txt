@@ -1,0 +1,78 @@
+Powershell commands from YT(WindowsChimp)
+
+1. Listing the drives 
+Get-PSDrive
+To list drives with the file system
+Get-PSDrive –PSProvider FileSystem
+
+2. Listing the files in a directory 
+Get-ChildItem
+To list files in another directory
+Get-ChildItem path-of-another-directory
+
+3. Changing the current directory
+Set-Location path
+
+4. Creating a new item
+To create directory
+New-Item –ItemType Directory –Path path -Name name-of-the-directory
+To create file
+New-Item –ItemType File –Path path –Name filename –Value “value in your file”
+To edit content later
+Set-Content –Path path-of-file –Value “your new value”
+
+5. Viewing file information or printing it
+To view file information
+Get-Item file-name
+To view the content of the file
+Get-Content file-name
+To view it in an external window
+Get-Content file-name | Out-GridView
+To print it
+Get-Content file-name | Out-Printer
+
+6. Renaming a file or folder 
+Rename-Item –Path path –NewName new-name
+
+7. Copying or moving an item 
+To copy
+Copy-Item path-with-file-name –Destination destination-path
+To move
+Move-Item –Path path-with-file-name –Destination destination-path
+To move and rename
+Move-Item –Path path-with-file-name –Destination destination-path-with-new-name
+
+8. Removing a file or directory 
+Remove-Item file-or-directory-name
+
+9. Getting all the commands 
+Get-Command
+To get command of specific type
+Get-Command –CommandType function, alias, or cmdlet
+To search for a command
+Get-Command *search-value
+
+10. Getting help for a command 
+Get-Help command-name
+To get examples
+Get-Help command-name -Example
+
+11. Getting the list of processes and services 
+For processes
+Get-Process
+For services
+Get-Service
+
+12. To stop a process 
+Stop-Process –Name name-of-process
+To stop a particular instance of the process and confirm
+Stop-Process –Id id-of-process –Confirm -PassThru
+
+13. Get the list of Windows drivers 
+Get-WindowsDriver –Online –All 
+
+14. Taking backup of drivers 
+Export-WindowsDriver -Online -Destination path-for-backup
+
+15. Scan for malware 
+Start-MpScan –ScanType QuickScan/FullScan –ScanPath directory-path-to-be-scanned

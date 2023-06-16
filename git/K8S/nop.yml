@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nop
+spec:
+  containers:
+    - name: nop
+      image: shruthibandi457/nop:latest
+      ports: 
+        - containerPort: 5000

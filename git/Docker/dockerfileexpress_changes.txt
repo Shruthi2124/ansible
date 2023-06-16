@@ -1,0 +1,13 @@
+FROM node:16-alpine
+LABEL author="Manu" organization="khaja.tec" project="nodejs"
+RUN apk add --update && \
+    apk add git && \
+    git clone https://github.com/expressjs/express.git && \
+    cd express && \
+    npm install express && \
+    npm install -g express-generator@4 && \
+    express /tmp/foo && cd /tmp/foo && \
+    npm install
+WORKDIR /tmp/foo
+EXPOSE 3000
+CMD ["npm", "start"]

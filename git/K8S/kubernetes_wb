@@ -1,0 +1,77 @@
+### Kubernetes Architecture : 
+
+ #Master node components (control plane components) :
+   *Kube-APIserver: 
+            One of the most important component of k8s,it actually looks like k8s because all the communication happens with kube-apiserver,if any other component need to communicate with any other component we need kube-apiserver, let it be internal or external communication
+   -- it exposes functionality over HTTP(s) protocol and provides RESTAPI
+   *etcd : 
+            etcd is a strongly consistent, distributed key-value store that provides a reliable way to store data that needs to be accessed by a distributed system or cluster of machines. It gracefully handles leader elections during network partitions and can tolerate machine failure, even in the leader node.
+
+Distributed key-value : 
+A distributed key-value store is built to run on multiple computers working together, and thus allows you to work with larger data sets because more servers with more memory now hold the data. By distributing the store across multiple servers, you can increase processing performance.
+
+
+
+
+
+### Workloads
+A workload is an application running on Kubernetes. Whether your workload is a single component or several that work together, on Kubernetes you run it inside a set of pods. In Kubernetes, a Pod represents a set of running containers on your cluster.
+
+**Kubernetes provides several built-in workload resources:
+D--eployment and ReplicaSet (replacing the legacy resource ReplicationController). Deployment is a good fit for managing a stateless application workload on your cluster, where any Pod in the Deployment is interchangeable and can be replaced if needed.
+--StatefulSet lets you run one or more related Pods that do track state somehow. For example, if your workload records data persistently, you can run a StatefulSet that matches each Pod with a PersistentVolume. Your code, running in the Pods for that StatefulSet, can replicate data to other Pods in the same StatefulSet to improve overall resilience.
+--DaemonSet defines Pods that provide node-local facilities. These might be fundamental to the operation of your cluster, such as a networking helper tool, or be part of an add-on.
+--Every time you add a node to your cluster that matches the specification in a DaemonSet, the control plane schedules a Pod for that --DaemonSet onto the new node.
+Job and CronJob define tasks that run to completion and then stop. Jobs represent one-off tasks, whereas CronJobs recur according to a schedule.
+
+
+### Labels
+Labels are key value pairs that can be attached as metadata to k8s objects.
+Labels help in selecting/querying/filtering objects
+Labels can be selected using
+--equality based 
+--set based 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+kubeadm init --pod-network-cidr "10.244.0.0/16" --cri-socket "unix:///var/run/cri-dockerd.sock"
+
+kubeadm join 10.0.0.4:6443 --token 65u3bs.9xxeuhnwh5tklk38 \
+        --cri-socket "unix:///var/run/cri-dockerd.sock" \
+        --discovery-token-ca-cert-hash sha256:343b44f246f418ce55b2d7eb6ca3fcf0e577343684eea2faed732f00316a30a6
+
+
+
+
+
+
+restart policy: 
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: always
+spec:
+  restartPolicy: Always
+  containers:
+    - name: alpine
+      image: alpine
+      args:
+        - sleep
+        - 3s
+
+
+
+

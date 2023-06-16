@@ -1,0 +1,3 @@
+resources:
+  - satdeploy.yml
+  - hpa.yml

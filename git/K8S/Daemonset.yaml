@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logstash
+  labels: 
+    env: preprod
+spec:
+  minReadySeconds: 2
+  selector:
+    matchLabels:
+      env: preprod
+  template:
+    metadata:
+      name: logstash
+      labels:
+        env: preprod
+    spec: 
+      containers:
+        - name: deamonset
+          image: logstash:8.7.0
+          ports: 
+            - containerPort: 5044
+              protocol: TCP

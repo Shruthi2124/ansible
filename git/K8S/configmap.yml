@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: expconfigmap
+  labels:
+    env: uat
+data: 
+  MYSQL_ROOT_PASSWORD: rootroot
+  MYSQL_DATABASE: persons
+  MYSQL_USER: Su
+  MYSQL_PASSWORD: rootroot
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: configpod
+  labels:
+    env: uat 
+spec: 
+  containers: 
+    - name: configpod
+      image: mysql:8
+      envFrom: 
+        - configMapRef: 
+            name: expconfigmap
+            optional: true
+      ports: 
+        - containerPort: 3306
+            
+

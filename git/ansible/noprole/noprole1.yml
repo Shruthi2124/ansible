@@ -1,0 +1,5 @@
+- name: intstall tomcat
+  become: yes
+  hosts: all
+  roles: 
+    - nop

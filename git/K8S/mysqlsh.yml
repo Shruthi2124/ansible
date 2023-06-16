@@ -1,0 +1,85 @@
+apiVersion: v1 
+kind: PersistentVolumeClaim
+metadata: 
+  name: mysqlpvc 
+  labels:
+    env: uat
+spec: 
+  accessModes: 
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: managed
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-st
+  labels: 
+    env: uat
+spec: 
+  minReadySeconds: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      env: uat
+  template: 
+    metadata: 
+      name: mysql-st
+      labels:
+        env: uat
+    spec: 
+      containers:
+        - name: mysql-st
+          image: mysql:8
+          resources: 
+            requests:
+              memory: 50Mi
+              cpu: 50m
+            limits:
+              memory: 200Mi
+              cpu: 200m
+          ports:
+            - name: mysql-st
+              containerPort: 3306
+              protocol: TCP
+          env: 
+            - name: MYSQL_ROOT_PASSWORD
+              value: rootroot
+            - name: MYSQL_USER
+              value: Su
+            - name: MYSQL_PASSWORD
+              value: rootroot
+            - name: MYSQL_DATABASE
+              value: Persons
+          volumeMounts: 
+            - name: mysqlpvc
+              mountPath: /var/lib/mysql
+      volumes: 
+        - name: mysqlpvc
+          PersistentVolumeClaim: 
+            claimName: mysqlpvc
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: mysqlsvc
+  labels: 
+    env: uat
+spec: 
+  clusterIP: None
+  type: ClusterIP
+  ports: 
+   - name: mysqlsvc
+     port: 8081
+     protocol: TCP
+     targetPort: 3306
+  selector: 
+    env: uat
+    
+
+
+
+
+

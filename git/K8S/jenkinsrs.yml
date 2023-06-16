@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: rs
+  labels:
+    app: web
+spec:
+  minReadySeconds: 2
+  replicas: 5
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      name: rs
+      labels: 
+        app: web
+    spec:
+      containers:
+        - name: jenkins
+          image: syedsohail321/jenkins:1.0
+          ports:
+            - containerPort: 8080
+              name: nopport
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-svc
+  labels:
+    app: web
+spec:
+  ports:
+  - name: jenkins-svc
+    port: 8081
+    targetPort: 8080
+  selector:
+    app: web
+  type: LoadBalancer
+    

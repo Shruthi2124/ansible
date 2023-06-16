@@ -1,0 +1,4 @@
+- name: run noptasks
+  ansible.builtin.include_tasks: 
+    file: noptasks.yml
+    

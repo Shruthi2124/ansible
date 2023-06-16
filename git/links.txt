@@ -1,0 +1,12 @@
+https://github.com/hashicorp/terraform-provider-azurerm/blob/main/examples/kubernetes/nodes-on-internal-network/main.tf
+
+K8s cluster link
+-----------------------------------------------------------------------------------------------
+
+https://github.com/hashicorp/terraform-provider-azurerm/blob/main/examples/virtual-machines/linux/load-balanced/main.tf
+
+VM link
+
+-------------------------------------------------------------------------------------------
+
+https://learnk8s.io/kubernetes-autoscaling-strategies

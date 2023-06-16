@@ -1,0 +1,110 @@
+- name: installing metricbeat
+  hosts: all
+  become: yes
+  tasks: 
+    - name: downloading metricbeat
+      ansible.builtin.apt_key: 
+        url: https://artifacts.elastic.co/GPG-KEY-elasticsearch 
+        state: present
+    - name: installing apttransport 
+      ansible.builtin.apt: 
+        name: apt-transport-https
+        update_cache: yes
+        state: present
+    - name: save the repository definition
+      ansible.builtin.apt_repository: 
+        repo: "deb https://artifacts.elastic.co/packages/8.x/apt stable main"
+        filename: /etc/apt/sources.list.d/elastic-8.x.list  
+        update_cache: true
+        state: present
+    - name: installing metricbeat
+      ansible.builtin.apt: 
+        name: metricbeat
+        update_cache: yes
+        state: present
+    - name: enabling metricbeat
+      ansible.builtin.systemd: 
+        name: metricbeat
+        enabled: true
+        state: started
+
+
+---
+
+- name: installing nopcommerce
+  hosts: all 
+  become: yes
+  tasks: 
+    - name: installing .net packages
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+        dest: /tmp/packages-microsoft-prod.deb
+    - name: adding packages
+      ansible.builtin.apt:
+        name: deb
+        deb: /tmp/packages-microsoft-prod
+        state: present
+        update_cache: true
+      tags:
+        
+    - name: installing unzip
+      ansible.builtin.apt: 
+        name: unzip
+        state: present
+        update_cache: true
+    - name: making directory
+      ansible.builtin.file: 
+        path: /usr/share/nopCommerce
+        state: directory
+    - name: changing the directory
+      ansible.builtin.command: 
+        chdir: /usr/share/nopCommerce
+    - name: downloading nop
+      ansible.builtin.get_url: 
+        url: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.3/nopCommerce_4.60.3_NoSource_linux_x64.zip
+    - name: unzip nop 
+      ansible.builtin.unarchive:
+        src: nopCommerce_4.60.3_NoSource_linux_x64.zip
+        dest: /usr/share/nopCommerce
+        remote_src: true
+    - name: creating directory bin
+      ansible.builtin.file:
+        path: bin
+        state: directory
+    - name: creating directory logs
+      ansible.builtin.file:
+        path: logs
+        state: directory
+    - name: adding user nop 
+      ansible.builtin.user: 
+        name: nop
+        uid: 1000
+    - name: adding permissions
+      ansible.builtin.file:
+        path: /usr/share/nopCommerce
+        owner: nop
+        group: nop 
+        state: touch 
+        mode: 755
+    - name: copying nop servicefile
+      ansible.builtin.copy: 
+        src: nop.service
+        dest: /etc/systemd/system/nopCommerce.service
+    - name: enabling nop
+      ansible.builtin.systemd: 
+        name: enabling nop 
+        enabled: true
+        state: start
+
+
+
+        
+
+
+
+
+      
+
+
+
+

@@ -1,0 +1,98 @@
+---
+- name: installing OpenMRS 
+  hots: all
+  become: yes
+  tasks: 
+    - name: installing java
+      ansible.builtin.apt: 
+        name: openjdk-8-jdk
+        update_cache: yes
+        state: present
+    - name: create group
+      ansible.builtin.group: 
+        name: tomcat
+        state: present
+    - name: adding user 
+      ansible.builtin.user:
+        name: adding user to the group 
+        role: "{{ role }}"
+        create_home: yes
+        group: "{{ group }}"
+        home: "{{ home_directory }}"
+        shell: "{{ shell }}"
+    - name: downloading tomcat
+      url: https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.109/bin/apache-tomcat-7.0.109.tar.gz
+      dest: /tmp/apache-tomcat-7.0.109.tar.gz
+    - name: untar tomcat
+      ansible.builtin.unarchive: 
+        src: /tmp/apache-tomcat-7.0.109.tar.gz
+        dest: "{{ home_directory }}"
+        remote_src: yes 
+    - name: changing directory 
+      ansible.builtin.file:
+        path: "{{ home_directory }}"
+        state: directory
+    - name: changing group ownership
+      ansible.builtin.group: 
+        name: "{{ group }}"
+        state: present
+        group: "{{ tomcat }}"
+        owner: "{{ home_directory }}"
+    - name: some permissions
+      ansible.builtin.file:
+        path: conf
+        state: touch
+        mode: g+r,g+x 
+    - name: changing ownership
+      ansible.builtin.file:
+        path: "{{ home_directory }}"
+        state: directory
+        recurse: yes
+        owner: "{{ user }}"
+        group: "{{ group }}"
+    - name: copying the service file 
+      ansible.builtin.copy: 
+        src: tomcat.service
+        dest: /etc/systemd/system/tomcat.service
+      notify:
+        - reload daemon
+    - name: enabling tomcat
+      ansible.builtin.systemd: 
+        enabled: yes
+        name: tomcat
+        state: started
+    - name: making directory
+      ansible.builtin.file:
+        path: /var/lib/OpenMRS
+        state: directory
+    - name: changing ownership of OpenMRS
+      ansible.builtin.file:
+        path: /var/lib/OpenMRS
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        state: directory
+        recurse: yes
+    - name: downloading openmrs 
+      ansible.builtin.get_url:
+        url: https://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_2.5.0/openmrs.war
+        dest: /tmp/openmrs.war
+    - name: copying openmrs
+      ansible.builtin.copy:
+        src: /tmp/openmrs.war
+        dest: /opt/tomcat/webapps/
+    - name: changing ownership
+      ansible.builtin.file:
+        path: /opt/tomcat/webapps/openmrs.war
+        owner: "{{ user }}"
+        group: "{{ group }}"
+  handlers:
+    - name: reload daemon
+      ansible.builtin.systemd:
+        daemon_reload: yes
+        
+        
+
+  
+
+
+

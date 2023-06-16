@@ -1,0 +1,15 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadate: 
+  name: hpa
+  labels: 
+    env: kustomise
+spec: 
+  maxReplicas: 10
+  minReplicas: 2
+  scaleTargetRef: 
+    apiVersion: apps/v1
+    kind: Deployment
+    name: satdeploy
+  targetCPUUtilizationPercentage: 50
+  

@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-st
+  labels: 
+    env: uat
+spec: 
+  minReadySeconds: 10
+  replicas: 2
+  selector:
+    matchLabels:
+      env: uat
+  template: 
+    metadata: 
+      name: mysql-st
+      labels:
+        env: uat
+    spec: 
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          volumeMounts: 
+            - mountPath: /var/lib/mysql
+              name: nop-sql
+          ports:
+            - name: mysql-st
+              containerPort: 3306
+              protocol: TCP
+          env: 
+            - name: MYSQL_ROOT_PASSWORD
+              value: rootroot
+            - name: MYSQL_USER
+              value: Su
+            - name: MYSQL_PASSWORD
+              value: rootroot
+            - name: MYSQL_DATABASE
+              value: Persons
+            # - MYSQL_ROOT_PASSWORD: rootroot
+            #   MYSQL_DATABASE: Persons 
+            #   MYSQL_USER: Su 
+            #   MYSQL_PASSWORD: rootroot
+  volumeClaimTemplates:
+    - metadata:
+        name: nop-sql
+      spec:
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: managed
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: mysqlsvcsh
+  labels: 
+    env: uat
+spec: 
+  clusterIP: None
+  type: ClusterIP
+  ports: 
+    - name: mysqlsvc
+      port: 8081
+      protocol: TCP
+      targetPort: 3306
+  selector: 
+    env: uat
+    exp: test-deployment
+
+
+

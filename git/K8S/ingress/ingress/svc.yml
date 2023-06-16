@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: basket-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: basket-deploy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: catalog-deploy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: identity-deploy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: order-deploy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80            
+

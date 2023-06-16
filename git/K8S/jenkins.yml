@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: newjenkinsdeploy
+  labels:
+    env: testing
+spec:
+  minReadySeconds: 2
+  replicas: 2
+  selector:
+    matchLabels:
+      env: testing
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: newjenkinsdeploy
+      labels:
+        env: testing
+    spec: 
+      containers:
+        - name: newjenkinsdeploy
+          image: syedsohail321/jenkins:1.0
+          ports:
+            - name: tcpport
+              protocol: TCP
+              containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-svc
+  labels:
+    env: testing 
+spec: 
+  selector: 
+    env: testing 
+  ports: 
+    - name: jenkins-svc
+      port: 8081
+      protocol: TCP
+      targetPort: 8080
+  type: LoadBalancer

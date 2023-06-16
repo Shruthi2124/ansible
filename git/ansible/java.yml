@@ -1,0 +1,6 @@
+- name: installing java17 on ubuntu
+  hosts: all
+  become: yes 
+  tasks: 
+    - name: installing java 17
+      
