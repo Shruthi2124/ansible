@@ -2,4 +2,4 @@
   become: yes
   hosts: all
   roles: 
-    - nop
+    - noprole
