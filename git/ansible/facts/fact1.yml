@@ -1,0 +1,8 @@
+- name: exploring facts
+  hosts: all
+  become: yes
+  tasks: 
+    - name: printing os 
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['os_family'] }}"
+        
