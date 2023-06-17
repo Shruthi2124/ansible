@@ -24,6 +24,7 @@
       ansible.builtin.copy:
         src: /tmp/gameoflife.war 
         dest: /var/lib/tomcat9/webapps/gameoflife.war
+        remote_src: yes
   
 
     
