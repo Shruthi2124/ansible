@@ -1,0 +1,4 @@
+- name: run goltasks
+  ansible.builtin.include_tasks: 
+    file: goltasks.yml
+    

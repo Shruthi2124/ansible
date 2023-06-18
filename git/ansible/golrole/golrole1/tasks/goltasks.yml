@@ -1,18 +1,3 @@
-**Manual steps: **
------------------
--sudo apt update
--sudo apt install openjdk-8-jdk tomcat9 -y
--cd /tmp
--wget https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/gameoflife.war
--sudo cp gameoflife.war /var/lib/tomcat9/webapps/gameoflife.war
-![preview](../images/an32.png)
----
-playbook of gol without variables:
-```
-- name: installing gol
-  hosts: all
-  become: yes
-  tasks: 
     - name: updating packages installing java
       ansible.builtin.apt:
         name: openjdk-8-jdk
@@ -36,6 +21,4 @@ playbook of gol without variables:
         src: /tmp/gameoflife.war 
         dest: /var/lib/tomcat9/webapps/gameoflife.war
         remote_src: yes
-  ```
-  ![preview](../images/an33.png)
-
+  

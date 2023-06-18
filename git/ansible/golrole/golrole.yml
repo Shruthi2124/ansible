@@ -1,0 +1,5 @@
+- name: intstall gol
+  become: yes
+  hosts: all
+  roles: 
+    - golrole1
