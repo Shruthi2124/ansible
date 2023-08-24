@@ -1,0 +1,11 @@
+pipeline {
+    agent { label 'ANSIBLE' }
+    stages {
+        stage('deploy') {
+            steps {
+                git 'https://github.com/Shruthi2124/ansible.git'
+                sh 'cd git/ansible/gol && ansible-playbook -i inventory/hosts gol.yaml'
+            }
+        }
+    }
+}

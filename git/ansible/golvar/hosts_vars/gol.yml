@@ -1,0 +1,34 @@
+- name: installing gol
+  hosts: all
+  become: yes
+  tasks:
+    - name: updating packages installing java
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: yes
+    - name: updating packages installing tomcat9
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: yes
+      notify: 
+        - restart tomcat9
+    - name: creating directory if doesnot exists
+      ansible.builtin.file:
+        path: ~/tmp/
+        state: directory
+        mode: '0777'
+        recurse: yes
+    - name: downloading gol
+      ansible.builtin.get_url:
+        url: "{{ source_location }}"
+        dest: "{{ destnication_location }}"
+        remote_src: yes
+  handlers: 
+    - name: restart tomcat9
+      ansible.builtin.service: 
+        name: "{{ tomcat9_service }}"
+        state: restarted
+      
+   

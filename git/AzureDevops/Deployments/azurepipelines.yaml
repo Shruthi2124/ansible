@@ -1,0 +1,42 @@
+#Deploy to AKS cluster
+
+trigger: 
+  - master
+
+vmImageName: 'ubuntu-latest'
+
+pr: none
+
+variables: 
+  - name: repository
+    value: 'spcnew'
+  - name: containerRegistry
+    value: 'shruthibandiacr2124'
+
+stages: 
+  - stage: Build 
+    displayName: Building and Push Docker image
+    jobs: 
+      - job: Build
+        displayName: Build job
+        steps: 
+          - task: Docker@2
+            displayName: Build and push image to acr 
+            inputs: 
+              command: 'buildAndPush' 
+              repository: ${{ variables.repository }}
+              Dockerfile: '**/Dockerfile'
+              containerRegistry: ${{ variables.containerRegistry }}
+  - stage: Deploy 
+    displayName: deploying into kubernetes cluster
+    jobs: 
+      - job: Deploy
+        displayName: Deploy Job
+        steps:
+          - bash: |
+              kubectl apply -f deployment.yml
+              displayName: Deploying to Aks
+
+---
+
+

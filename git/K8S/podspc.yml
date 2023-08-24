@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: spcpod
+spec: 
+    selector:
+      matchLabels:
+        name: spcpod
+    template:
+      metadata:
+        name: spcpod
+      labels:
+        name: spcpod
+      spec: 
+        containers:
+          - name: spcpod
+            image: shruthibandiacr2124.azurecr.io/spcnew:latest
+            ports:
+              - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spcsvc
+spec:
+  selector:
+    name: spcpod
+  type: LoadBalancer
+  ports: 
+    - name: svcport
+      port: 80
+      protocol: TCP 
+      targetPort: 8080
+

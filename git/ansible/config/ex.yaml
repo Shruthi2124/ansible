@@ -1,0 +1,28 @@
+---
+realestate: 
+  - assetvalue: 10,00000
+    type: residential
+    areainsqt: 1500sft
+  - assetvalue: 2000000
+    type: commercial
+    areainsqt: 1000sft
+equity: 
+  - company: TATA
+    NumberofStocks: 50
+    StockIndex: NSE
+    AverageStockPrice: 100
+  - company: adani
+    NumberofStocks: 100
+    StockIndex: 
+    AverageStockPrice: 
+MF: 
+  - Instrument: 
+    Number: 
+    Average: 
+FD: 
+  - company:
+    Amount: 
+    Interestprice:
+    
+
+      

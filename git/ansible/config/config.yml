@@ -1,0 +1,34 @@
+---
+name: 
+become: yes
+hosts: all
+tasks:  
+  - name: installing azcli
+    ansible.builtin.apt:
+      name: azure-cli
+      state: present
+      update_cache: true
+  - name: create resource grp
+    azure_rm_resourcegroup:
+      name: rg2
+      location: eastus
+      state: present
+  - name: create aks cluster
+    azure_rm_aks:
+      name: myAKS
+      location: eastus
+      resource_group: rg2
+      dns_prefix: akstest
+      kubernetes_version: 1.14.6
+      linux_profile:
+      admin_username: azureuser
+      ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAA...
+    service_principal:
+      client_id: "cf72ca99-f6b9-4004-b0e0-bee10c521948"
+      client_secret: "Password123!"
+    agent_pool_profiles:
+      - name: default
+        count: 5
+        mode: System
+        vm_size: Standard_B2s
+

@@ -1,0 +1,12 @@
+trigger:
+- master
+
+pool:
+  name: Default
+
+steps:
+  - task: DotNetCoreCLI@2
+    inputs: 
+      command: 
+    
+

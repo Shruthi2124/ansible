@@ -1,0 +1,112 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: blue
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: blue-pod
+      labels:
+        app: blue
+        version: "1.0.0"
+    spec:
+      containers:
+        - name: blue
+          image: shaikkhajaibrahim/dummy-id-srv:1.0.0
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: green
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: green-pod
+      labels:
+        app: green
+        version: "1.0.0"
+    spec:
+      containers:
+        - name: green
+          image: shaikkhajaibrahim/dummy-basket-srv:1.0.0
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orange-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: orange
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: orange-pod
+      labels:
+        app: orange
+        version: "1.0.0"
+    spec:
+      containers:
+        - name: orange
+          image: shaikkhajaibrahim/dummy-ctlg-srv:1.0.0
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: red-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: red
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: red-pod
+      labels:
+        app: red
+        version: "1.0.0"
+    spec:
+      containers:
+        - name: red
+          image: shaikkhajaibrahim/dummy-ord-srv:1.0.0
+          ports:
+            - containerPort: 80

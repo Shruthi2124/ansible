@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: color-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: red-svc
+                port:
+                  number: 80
+          - path: /blue(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: blue-svc
+                port:
+                  number: 80
+          - path: /red(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: red-svc
+                port:
+                  number: 80
+          - path: /orange(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: green-svc
+                port:
+                  number: 80
+          - path: /green(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: orange-svc
+                port:
+                  number: 80

@@ -36,7 +36,7 @@ PHP install on ubuntu::
 --echo "<?php phpinfo(); ?>" > /var/www/html/info.php
 o/p : ipaddress/info.php
 
-*Dockerfile for phpinfo : apache2
+***Dockerfile for phpinfo : apache2**
 FROM ubuntu:22.04
 LABEL Author="Su" Organization="QT" Project="Learning"
 RUN  apt-get update && apt-get install apache2 -y
@@ -46,7 +46,7 @@ EXPOSE 80
 CMD [“apache2ctl”, “-D”, “FOREGROUND”]
 
 ---------------
-Dockerfile for phpinfo : nginx
+**Dockerfile for phpinfo : nginx**
 FROM ubuntu:22.04
 LABEL Author="Su" Organization="QT" Project="Learning"
 RUN  apt-get update && apt-get install nginx -y
@@ -148,7 +148,7 @@ Connect to VM :
 --docker image ls
 --docker tag 6efc10a0510f(nginx image is) shruthibandiacr (acr name)
            or
---docker tag 6efc10a0510f shruthibandiacr/nginx(first tagging to the registry and then tag that registry to the server)
+--docker tag 6efc10a0510f shruthibandiacr/nginx(first tagging to the registry and then tag that registry to the server //nginx container)
 using the above image - here tagging to server
 --docker tag shruthibandiacr/nginx shruthibandiacr.azurecr.io/nginx (tagging registry to server)
 --docker push shruthibandiacr.azurecr.io/nginx 
@@ -175,7 +175,7 @@ RUN ls /spring-petclinic
 RUN cd /spring-petclinic && mvn package
 
 FROM amazoncorretto:17-alpine-jdk
-LABEL author="Prakash Reddy" organization="qt" project="learning"
+LABEL author="Su" organization="qt" project="learning"
 EXPOSE 8080
 ARG HOME_DIR=/spc
 WORKDIR ${HOME_DIR}

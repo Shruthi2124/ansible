@@ -1,0 +1,7 @@
+FROM ubuntu:22.04
+LABEL Author="Su" Organization="QT" Project="Learning"
+RUN  apt-get update && apt-get install apache2 -y
+RUN apt-get install php libapache2-mod-php php-mysql -y
+RUN echo "<?php phpinfo() ?>" > /var/www/html/info.php
+EXPOSE 80
+CMD [“apache2ctl”, “-D”, “FOREGROUND”]

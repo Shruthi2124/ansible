@@ -1,0 +1,40 @@
+trigger: 
+  - master
+pool: ubuntu-latest
+stages: 
+  - stage: stage1
+    displayName: mvn packages
+    jobs: 
+      - job: build code
+        displayName: mvn packages
+        steps: 
+          - task: maven@4
+            inputs: 
+              mavenPOMFile: 'pom.xml'
+              goals: package
+
+---
+#if we have only one stage, go with jobs
+name: learning
+trigger:
+  - master
+pool: ubuntu-latest
+jobs:
+  - job: buildjob
+    displayName: Build JOB
+    steps:
+      - task: Maven@4
+        inputs:
+          mavenPOMFile: 'pom.xml'
+          goal: 'package'
+---
+#if we have only one Job, go with Steps
+name: learning
+trigger:
+  - master
+pool: ubuntu-latest
+steps:
+  - task: Maven@4
+    inputs:
+      mavenPOMFile: 'pom.xml'
+      goal: 'package'
